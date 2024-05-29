@@ -1,0 +1,28 @@
+credentials/
+settings.py
+development/
+tmp/
+temporary/
+temp.py
+temporary.py
+tmp.py
+
+# Mac
+.DS_Store
+
+# Python
+__pycache__/
+*.py[codt]
+*$py.class
+
+# Python environments
+.env/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Visual Studio Code
+.vscode/

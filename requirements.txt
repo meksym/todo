@@ -1,0 +1,8 @@
+aiogram==3.5.0
+peewee==3.17.3
+psycopg2-binary-==2.9.9
+celery==5.3.4
+redis==5.0.3
+Babel==2.14.0
+pytz==2023.3.post1
+matplotlib==3.9.0

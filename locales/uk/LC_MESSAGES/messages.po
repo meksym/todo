@@ -1,0 +1,670 @@
+# Ukrainian translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-05-29 09:57+0300\n"
+"PO-Revision-Date: 2024-05-29 12:47+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: uk\n"
+"Language-Team: uk <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+#: link.py:26
+msgid "How it works❓"
+msgstr "Як це працює❓"
+
+#: link.py:27
+msgid "📝 To-do list"
+msgstr "📝 Завдання"
+
+#: handlers/task.py:90 handlers/task.py:115 link.py:28
+msgid "🆕 Create task"
+msgstr "🆕 Створити завдання"
+
+#: link.py:29
+msgid "⚙️ Settings"
+msgstr "⚙️ Налаштування"
+
+#: handlers/folder.py:259 handlers/user.py:104 link.py:30
+msgid "📁 Folders"
+msgstr "📁 Папки"
+
+#: middleware.py:85
+msgid "Sorry, but I couldn't find the specified task."
+msgstr "Вибачте, але я не зміг знайти вказане завдання."
+
+#: middleware.py:99
+msgid "✅ YES"
+msgstr "✅ ТАК"
+
+#: middleware.py:102
+msgid "❌ NO"
+msgstr "❌ НІ"
+
+#: middleware.py:109
+msgid "Do I need to create tasks?"
+msgstr "Мені потрібно створити завдання?"
+
+#: handlers/task.py:294 handlers/utils.py:20 middleware.py:110
+#, python-format
+msgid "Name: %s"
+msgstr "Назва: %s"
+
+#: handlers/task.py:298 handlers/utils.py:24 middleware.py:113
+#, python-format
+msgid "Description: %s"
+msgstr "Опис: %s"
+
+#: models.py:189
+msgid "Can't process it. Invalid data received."
+msgstr "Неможливо обробити. Отримано недійсні дані."
+
+#: models.py:201
+#, python-format
+msgid ""
+"Sorry, I can't register this entry for the task \"%s\" because there's "
+"already another one intersecting with it – its start %s (duration %s)"
+msgstr ""
+"На жаль, я не можу зареєструвати цей запис для завдання \"%s\", "
+"тому що з ним уже перетинається інше – його початок %s (тривалість %s)"
+
+#: reminder.py:33
+msgid "Reminder"
+msgstr "Нагадування"
+
+#: settings.py:31
+msgid "🇬🇧 English"
+msgstr "🇬🇧 Англійська"
+
+#: settings.py:32
+msgid "🇺🇦 Ukrainian"
+msgstr "🇺🇦 Українська"
+
+#: handlers/folder.py:26
+msgid "Sorry, but I can't show the folders because you don't have them."
+msgstr "Вибачте, але я не можу показати папки, тому що у вас їх немає."
+
+#: handlers/folder.py:31
+msgid "🆕 Create folder"
+msgstr "🆕 Створити папку"
+
+#: handlers/folder.py:47 handlers/folder.py:231 handlers/folder.py:316
+#: handlers/task.py:66 handlers/task.py:221 handlers/task.py:263
+#: handlers/task.py:287 handlers/task.py:844 handlers/task.py:907
+#: handlers/user.py:108 handlers/utils.py:13
+msgid "Main folder"
+msgstr "Головна папка"
+
+#: handlers/folder.py:60 handlers/task.py:107
+msgid "⬅️ Previous page"
+msgstr "⬅️ Попередня сторінка"
+
+#: handlers/folder.py:66 handlers/task.py:111
+msgid "➡️ Next page"
+msgstr "➡️ Наступна сторінка"
+
+#: handlers/folder.py:72
+msgid "🆕 Create new"
+msgstr "🆕 Створити нову"
+
+#: handlers/folder.py:91
+msgid ""
+"Below is a list of your folders. To change the folder, click on the "
+"corresponding number.\n"
+msgstr ""
+"Нижче наведено список ваших папок. Щоб змінити папку, "
+"натисніть на відповідний номер.\n"
+
+#: handlers/folder.py:171 handlers/folder.py:356 handlers/folder.py:439
+#: handlers/task.py:191 handlers/task.py:483 handlers/user.py:230
+msgid "⬅️ Cancel"
+msgstr "⬅️ Відмінити"
+
+#: handlers/folder.py:173
+msgid ""
+"Creating a new folder. You need to enter a name, and if necessary, you "
+"can enter a description on the next line."
+msgstr ""
+"Створення нової папки. Потрібно ввести ім’я, "
+"а за потреби можна ввести опис у наступному рядку."
+
+#: handlers/folder.py:194 handlers/folder.py:381 handlers/task.py:217
+#: handlers/task.py:431 handlers/task.py:654
+msgid "Sorry, but I can't process it. Try again."
+msgstr "Вибачте, але я не можу це обробити. Спробуйте знову."
+
+#: handlers/folder.py:205
+#, python-format
+msgid "Folder \"%s\" has been created. Type /%s to view the list of folders."
+msgstr "Папку \"%s\" створено. Введіть /%s, щоб переглянути список папок."
+
+#: handlers/folder.py:221 handlers/folder.py:297 handlers/folder.py:331
+#: handlers/folder.py:421 handlers/folder.py:471
+msgid "Folder does not exists"
+msgstr "Папки не існує"
+
+#: handlers/folder.py:232
+msgid ""
+"This is the main folder that always exists by default and cannot be "
+"deleted or edited."
+msgstr ""
+"Це основна папка, яка завжди існує за замовчуванням "
+"і не може бути видалена чи відредагована."
+
+#: handlers/folder.py:247
+msgid "🟢 Set as active"
+msgstr "🟢 Встановити активною"
+
+#: handlers/folder.py:251
+msgid "🔄 Update details"
+msgstr "🔄 Оновити"
+
+#: handlers/folder.py:255
+msgid "❌ Delete"
+msgstr "❌ Видалити"
+
+#: handlers/folder.py:267
+msgid ""
+"Folder:\n"
+"\n"
+"{name}\n"
+"\n"
+"{description}"
+msgstr ""
+"Папка:\n"
+"\n"
+"{name}\n"
+"\n"
+"{description}"
+
+#: handlers/folder.py:274
+#, python-format
+msgid ""
+"Folder:\n"
+"\n"
+"%s"
+msgstr ""
+"Папка:\n"
+"\n"
+"%s"
+
+#: handlers/folder.py:317
+#, python-format
+msgid "Active folder successfully changed. Now active folder is \"%s\""
+msgstr "Активну папку успішно змінено. Зараз активною є \"%s\""
+
+#: handlers/folder.py:340
+msgid "Sorry, but you cannot change the data of the main folder."
+msgstr "Вибачте, але ви не можете змінити дані головної папки."
+
+#: handlers/folder.py:349
+#, python-format
+msgid ""
+"To change the \"%s\" folder, you need to send me a new name and if "
+"necessary a description via line"
+msgstr ""
+"Щоб змінити папку \"%s\", вам потрібно надіслати мені нове ім'я та, "
+"якщо необхідно, опис через рядок"
+
+#: handlers/folder.py:389
+msgid "Folder does not exist"
+msgstr "Папки не існує"
+
+#: handlers/folder.py:399
+#, python-format
+msgid "Folder \"%s\" successfully changed. Type /%s to view the list of folders."
+msgstr "Папку \"%s\" успішно змінено. Введіть /%s, щоб переглянути список папок."
+
+#: handlers/folder.py:430 handlers/folder.py:480
+msgid "Sorry, but you cannot delete the main folder."
+msgstr "Вибачте, але Ви не можете видалити головну папку."
+
+#: handlers/folder.py:435 handlers/task.py:480
+msgid "❌ Confirm deletion"
+msgstr "❌ Підтвердити видалення"
+
+#: handlers/folder.py:443
+msgid ""
+"Are you sure you want to delete this folder? If you delete it, all its "
+"contents will also be deleted."
+msgstr ""
+"Ви впевнені, що хочете видалити цю папку? Якщо ви видалите, весь її вміст також буде видалено."
+
+#: handlers/folder.py:494
+#, python-format
+msgid "Folder \"%s\" was successfully deleted"
+msgstr "Папку \"%s\" учпішно видалено"
+
+#: handlers/folder.py:519
+msgid "Okey"
+msgstr "Okey"
+
+#: handlers/task.py:83
+#, python-format
+msgid ""
+"There is no incomplete task in the folder \"%s\". Create a new one if "
+"necessary."
+msgstr ""
+"У папці \"%s\" немає невиконаного завдання. За потреби створіть новий."
+
+#: handlers/task.py:118 handlers/task.py:329 handlers/utils.py:55
+msgid "🕰️📈 Reports"
+msgstr "🕰️📈 Звіти"
+
+#: handlers/task.py:136
+#, python-format
+msgid ""
+"Below is the list of your unfinished tasks in the folder \"%s\". To make "
+"changes to a task, click on the corresponding number.\n"
+msgstr ""
+"Нижче наведено список ваших незавершених завдань у папці \"%s\". "
+"Щоб внести зміни в завдання, натисніть на відповідний номер.\n"
+
+#: handlers/task.py:167
+msgid "Sorry, but I can't process it because the page is wrong. ):"
+msgstr "Вибачте, але я не можу це обробити, оскільки номер сторінки неправильний. ):"
+
+#: handlers/task.py:185
+msgid ""
+"To create a new task, send me its name and, if necessary, its description"
+" via a line."
+msgstr ""
+"Щоб створити нове завдання, надішліть мені його назву та, "
+"якщо необхідно, опис через рядок."
+
+#: handlers/task.py:234 handlers/task.py:281
+#, python-format
+msgid "Task \"%s\" successfully created."
+msgstr "Завдання \"%s\" успішно створено."
+
+#: handlers/task.py:293 handlers/utils.py:19
+#, python-format
+msgid "Your task from the folder \"%s\""
+msgstr "Ваше завдання з папки \"%s\""
+
+#: handlers/task.py:295 handlers/utils.py:21
+#, python-format
+msgid "Created by: %s"
+msgstr "Створено: %s"
+
+#: handlers/task.py:304 handlers/utils.py:30
+msgid "✅ Mark done"
+msgstr "✅ Відмітити виконаним"
+
+#: handlers/task.py:308 handlers/utils.py:34
+msgid "🔄 Update"
+msgstr "🔄 Оновити"
+
+#: handlers/task.py:312 handlers/task.py:370 handlers/utils.py:38
+msgid "📁 Active folder"
+msgstr "📁 Активна папка"
+
+#: handlers/task.py:316 handlers/utils.py:42
+msgid "❌ Remove"
+msgstr "❌ Видалити"
+
+#: handlers/task.py:320 handlers/utils.py:46
+msgid "⏲️ Countdown"
+msgstr "⏲️ Відлік"
+
+#: handlers/task.py:324 handlers/utils.py:50
+msgid "🔔 Reminder"
+msgstr "🔔 Нагадування"
+
+#: handlers/task.py:364
+#, python-format
+msgid "The task \"%s\" has been successfully marked as completed."
+msgstr "Завдання \"%s\" успішно відмічено виконаним"
+
+#: handlers/task.py:391
+#, python-format
+msgid ""
+"To update the details of the task \"%s\" send me a new name and if "
+"necessary a new description."
+msgstr ""
+"Щоб оновити деталі завдання \"%s\", надішліть мені нову назву та, "
+"якщо необхідно, новий опис."
+
+#: handlers/task.py:398
+msgid "Cencel"
+msgstr "Відмінити"
+
+#: handlers/task.py:436
+msgid "Update task does not exist ):"
+msgstr "Завдання не існує"
+
+#: handlers/task.py:464
+#, python-format
+msgid "Task \"%s\" successfully updated."
+msgstr "Завдання \"%s\" успішно оновлено."
+
+#: handlers/task.py:476
+#, python-format
+msgid "Are you sure you want to delete task \"%s\"?"
+msgstr "Ви впевнені, що хочете видалити завдання \"%s\"?"
+
+#: handlers/task.py:502
+#, python-format
+msgid "Task \"%s\" successfully deleted!"
+msgstr "Завдання \"%s\" успішно видалено!"
+
+#: handlers/task.py:528
+msgid "⏰ Complete the countdown"
+msgstr "⏰ Завершити відлік"
+
+#: handlers/task.py:532
+msgid "❌ Cancel"
+msgstr "❌ Відмінити"
+
+#: handlers/task.py:536
+#, python-format
+msgid ""
+"The countdown for the task \"%s\" has started (%s). To complete it, "
+"please press the corresponding \"⏰ Complete the countdown\" button."
+msgstr ""
+"Зворотний відлік для завдання \"%s\" розпочато (%s). "
+"Щоб завершити, натисніть відповідну кнопку \"⏰ Завершити відлік\"."
+
+#: handlers/task.py:580
+msgid "Button with incorrect data :("
+msgstr "Кнопка з не коректною інформацією"
+
+#: handlers/task.py:583
+msgid "✅YES"
+msgstr "✅ ТАК"
+
+#: handlers/task.py:584
+msgid "❌ REMOVE"
+msgstr "❌ ВИДАЛИТИ"
+
+#: handlers/task.py:587
+#, python-format
+msgid ""
+"Would you like to record the execution time (start: %s, duration: %s) for"
+" the task \"%s\"?\n"
+"\n"
+"If yes, please click the corresponding button or send any message with "
+"the text – it will be automatically added as a note to this record.\n"
+"\n"
+"If not, simply click the corresponding button."
+msgstr ""
+"Бажаєте записати час виконання (початок: %s, тривалість: %s) для завдання \"%s\"?\n"
+"\n"
+"Якщо так, натисніть відповідну кнопку або надішліть будь-яке повідомлення з "
+"текстом – воно буде автоматично додано як примітку до цього запису.\n"
+"\n"
+"Якщо ні, просто натисніть відповідну кнопку."
+
+#: handlers/task.py:623 handlers/task.py:648
+msgid "Sorry, something unexpected happened. I can't process it."
+msgstr "Вибачте, сталося щось несподіване. Я не можу це обробити."
+
+#: handlers/task.py:670
+#, python-format
+msgid "The time record for the task \"%s\" has been successfully created."
+msgstr "Запис часу для завдання \"%s\" успішно створено."
+
+#: handlers/task.py:690
+#, python-format
+msgid ""
+"Activity reports for the task \"%s\". To receive the report, please click"
+" the button for the desired period."
+msgstr ""
+"Звіти про діяльність для завдання \"%s\". Щоб отримати звіт, натисніть "
+"кнопку для потрібного періоду."
+
+#: handlers/task.py:732 handlers/task.py:763 handlers/task.py:794
+#: handlers/task.py:896
+msgid ""
+"Sorry, but there is not enough data to generate the report. Please use "
+"the countdown and try again later."
+msgstr ""
+"Вибачте, але недостатньо даних для створення звіту. "
+"Скористайтеся зворотним відліком і повторіть спробу пізніше."
+
+#: handlers/task.py:739
+#, python-format
+msgid "The sent photo contains today's activity report for the task \"%s\"."
+msgstr "Надіслана фотографія містить сьогоднішній звіт про діяльність для завдання \"%s\"."
+
+#: handlers/task.py:770
+#, python-format
+msgid ""
+"The sent photo contains the activity report for the task \"%s\" for the "
+"last 7 days."
+msgstr ""
+"Надіслана фотографія містить звіт активності для "
+"завдання \"%s\" за останні 7 днів."
+
+#: handlers/task.py:801
+#, python-format
+msgid ""
+"The sent photo contains the activity report for the task \"%s\" for the "
+"last 30 days."
+msgstr ""
+"Надіслана фотографія містить звіт активності для "
+"завдання \"%s\" за останні 30 днів."
+
+#: handlers/task.py:839
+#, python-format
+msgid ""
+"Activity reports for tasks from the \"%s\" folder. To obtain a report, "
+"select the desired period and click the corresponding button."
+msgstr ""
+"Звіти про дії для завдань із папки \"%s\". "
+"Щоб отримати звіт, виберіть потрібний період і натисніть відповідну кнопку."
+
+#: handlers/task.py:903
+#, python-format
+msgid ""
+"The attached photo contains an activity report for tasks in the \"%s\" "
+"folder"
+msgstr ""
+"Додана фотографія містить звіт про діяльність для завдань у папці \"%s\"."
+
+#: handlers/task.py:965
+msgid "Cancel"
+msgstr "Відмінити"
+
+#: handlers/task.py:968
+msgid "To set a reminder, enter the date and time in the following format:"
+msgstr "Щоб встановити нагадування, введіть дату й час у такому форматі:"
+
+#: handlers/task.py:972
+msgid "Y-m-d H:M"
+msgstr "Y-m-d H:M"
+
+#: handlers/task.py:974
+msgid "Y — year (four digits)"
+msgstr "Y — рік (4 цифри)"
+
+#: handlers/task.py:975
+msgid "m — month (two digits)"
+msgstr "m — місяць (2 цифри)"
+
+#: handlers/task.py:976
+msgid "d — day (two digits)"
+msgstr "d — день (2 цифри)"
+
+#: handlers/task.py:977
+msgid "H — hour (24-hour format, two digits)"
+msgstr "H — години (24-годинний формат, дві цифри)"
+
+#: handlers/task.py:978
+msgid "M — minutes (two digits)"
+msgstr "M — хвилини (2 цифри)"
+
+#: handlers/task.py:980
+msgid "Please note that the reminder will be created according to your time zone."
+msgstr "Зверніть увагу, що нагадування буде створено відповідно до вашого часового поясу."
+
+#: handlers/task.py:999
+msgid "Sorry, but I can't process it. Please try again."
+msgstr "Вибачте, але я не можу це обробити. Будь ласка спробуйте ще раз."
+
+#: handlers/task.py:1018
+msgid "The entered time is not valid"
+msgstr "Введений час недійсний"
+
+#: handlers/task.py:1023
+msgid "Sorry, but something went wrong. Please try again."
+msgstr "Вибачте, але щось пішло не так. Будь ласка спробуйте ще раз."
+
+#: handlers/task.py:1027
+msgid "Reminder successfully created"
+msgstr "Нагадування успішно створено"
+
+#: handlers/user.py:41
+msgid "Hello!"
+msgstr "Привіт!"
+
+#: handlers/user.py:52
+msgid ""
+"This is a personal management tool that will help you better manage your "
+"time, set goals, and track progress.\n"
+"\n"
+"You can work with tasks and, if necessary, use the task grouping feature "
+"to better organize your activities. You can also create reminders for "
+"tasks at specified times.\n"
+"\n"
+"Additionally, there is an extra feature for tracking your productivity – "
+"timers and reports. You can use timers to record the time spent on tasks,"
+" and based on this data, you can generate a report – an image with a "
+"histogram.\n"
+"\n"
+"This tool will help you plan your day more effectively, stay organized, "
+"and achieve your goals."
+msgstr ""
+"Це особистий інструмент управління, який допоможе вам краще керувати своїм "
+"часом, ставити цілі та відстежувати прогрес.\n"
+"\n"
+"Ви можете працювати із завданнями та при необхідності використовувати "
+"можливість групування завдань, що дозволить краще організувати ваші справи. "
+"Також ви можете створювати нагадування про завдання на визначений час.\n"
+"\n"
+"Крім цього, є додаткова можливість для відстеження вашої продуктивності – "
+"таймери та звіти. Ви можете використовувати таймери, які записуватимуть час "
+"виконання завдань, а на основі цих даних ви зможете отримати звіт – зображення "
+"з гістограмою.\n"
+"\n"
+"Цей інструмент допоможе вам ефективніше планувати свій день, залишатися "
+"організованим і досягати своїх цілей."
+
+#: handlers/user.py:75
+msgid "Сancelled"
+msgstr "Відмінено"
+
+#: handlers/user.py:85
+#, python-format
+msgid ""
+"Your settings\n"
+"\n"
+"Current language: %s\n"
+"Time zone: %s"
+msgstr ""
+"Ваші налаштування\n"
+"\n"
+"Поточна мова: %s\n"
+"Часова зона: %s"
+
+#: handlers/user.py:94
+msgid "🌐 Change language"
+msgstr "🌐 Змінити мову"
+
+#: handlers/user.py:98
+msgid "🌍 Change time zone"
+msgstr "🌍 Змінити часовий зону"
+
+#: handlers/user.py:110
+#, python-format
+msgid ""
+"\n"
+"Active folder: %s"
+msgstr ""
+"\n"
+"Активна папка: %s"
+
+#: handlers/user.py:113
+msgid "📁 Create folder"
+msgstr "📁 Створити папку"
+
+#: handlers/user.py:125
+#, python-format
+msgid "You have %s tasks, %s of which are completed!\n"
+msgstr "Кількість ваших завдань %s, з яких виконано %s!\n"
+
+#: handlers/user.py:128
+#, python-format
+msgid "You have %s folders!\n"
+msgstr "Кількість ваших папок %s!\n"
+
+#: handlers/user.py:181
+msgid "⚙️ Back to settings"
+msgstr "⚙️ Повернутися до налаштувань"
+
+#: handlers/user.py:186
+msgid "Choose a language"
+msgstr "Обріть мову"
+
+#: handlers/user.py:210
+msgid "Language successfully changed."
+msgstr "Мова успішно змінена."
+
+#: handlers/user.py:212
+msgid "I can't set this language."
+msgstr "Я не можу встановити цю мову."
+
+#: handlers/user.py:222
+msgid ""
+"To update the time zone, you need to send it to me in the correct format."
+" Below is the link to the list (TZ identifier) of possible options."
+msgstr ""
+"Щоб оновити часовий пояс, потрібно надіслати його мені в правильному форматі. "
+"Нижче посилання на список (ідентифікатор TZ) можливих варіантів."
+
+#: handlers/user.py:227
+msgid "Link"
+msgstr "Посилання"
+
+#: handlers/user.py:232
+msgid "Send me your preferred time zone"
+msgstr "Надішліть мені бажаний часовий пояс"
+
+#: handlers/user.py:256
+msgid "Sorry, but this time zone is not valid. Please try again."
+msgstr "Вибачте, але цей часовий пояс недійсний. Будь ласка спробуйте ще раз."
+
+#: handlers/user.py:266
+msgid "Time zone successfully changed."
+msgstr "Часовий пояс успішно змінено."
+
+#: reports/folder.py:50 reports/folder.py:124 reports/task.py:45
+#: reports/task.py:104
+msgid "Activity time"
+msgstr "Час активності"
+
+#: reports/folder.py:51 reports/task.py:46
+msgid "Hour"
+msgstr "Година"
+
+#: reports/folder.py:52 reports/task.py:47
+msgid "Minute"
+msgstr "Хвилина"
+
+#: reports/folder.py:125 reports/task.py:105
+msgid "Day"
+msgstr "День"
+
+#: reports/folder.py:126 reports/task.py:106
+msgid "Hours"
+msgstr "Години"
