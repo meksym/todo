@@ -10,7 +10,7 @@ from peewee import DoesNotExist
 import link
 from middleware import TaskMiddleware
 from filters import LinkFilter, without_state
-from models import Account, Folder, Task, Duration, utc_now
+from models import database, Account, Folder, Task, Duration, utc_now
 from state import CreateDuration, CreateTask, UpdateTask, CreateReminder
 
 from aiogram import Router, Bot, F, types
@@ -67,34 +67,35 @@ def create_list(account: Account,
     if account.active_folder:
         folder = account.active_folder
 
-    query = (
-        folder.tasks  # type: ignore
-        .where(Task.is_done == False)  # noqa
-        .order_by(Task.created_at.desc())  # type: ignore
-    )
-
-    count = query.count()
-    per_page = 15
-    pages = ceil(count / per_page)
-
-    builder = keyboard.InlineKeyboardBuilder()
-
-    if page > pages:
-        text = _(
-            'There is no incomplete task in the folder "%s". '
-            'Create a new one if necessary.'
-        )
-        text %= folder.name
-
-        builder.button(
-            text=_('🆕 Create task'),
-            callback_data=link.Call.Task.create
+    with database:
+        query = (
+            folder.tasks  # type: ignore
+            .where(Task.is_done == False)  # noqa
+            .order_by(Task.created_at.desc())  # type: ignore
         )
 
-        return text, builder.as_markup()
+        count = query.count()
+        per_page = 15
+        pages = ceil(count / per_page)
 
-    tasks = query.paginate(page, per_page)
-    tasks = list(tasks)
+        builder = keyboard.InlineKeyboardBuilder()
+
+        if page > pages:
+            text = _(
+                'There is no incomplete task in the folder "%s". '
+                'Create a new one if necessary.'
+            )
+            text %= folder.name
+
+            builder.button(
+                text=_('🆕 Create task'),
+                callback_data=link.Call.Task.create
+            )
+
+            return text, builder.as_markup()
+
+        tasks = query.paginate(page, per_page)
+        tasks = list(tasks)
 
     for number, task in enumerate(tasks, 1):
         data = link.build(link.Call.Task.retrieve, id=task.id)
@@ -217,18 +218,20 @@ async def end_create(message: types.Message,
         await message.reply(_("Sorry, but I can't process it. Try again."))
         return await start_create(message, bot, account, state)
 
-    name, description = parse(message.text)
-    folder = Folder(id=None, name=_('Main folder'), account=account)
+    with database:
+        name, description = parse(message.text)
+        folder = Folder(id=None, name=_('Main folder'), account=account)
 
-    if account.active_folder:
-        folder = account.active_folder
+        if account.active_folder:
+            folder = account.active_folder
 
-    task = Task.create(
-        account=account,
-        folder=folder,
-        name=name,
-        description=description,
-    )
+        task = Task.create(
+            account=account,
+            folder=folder,
+            name=name,
+            description=description,
+        )
+
     text, markup = base_retrieve(task)
 
     await message.answer(_('Task "%s" successfully created.') % name)
@@ -260,16 +263,18 @@ async def _end_create(
     except KeyError:
         return
 
-    folder = Folder(id=None, name=_('Main folder'), account=account)
-    if account.active_folder:
-        folder = account.active_folder
+    with database:
+        folder = Folder(id=None, name=_('Main folder'), account=account)
+        if account.active_folder:
+            folder = account.active_folder
 
-    task = Task.create(
-        account=account,
-        folder=folder,
-        name=name,
-        description=description,
-    )
+        task = Task.create(
+            account=account,
+            folder=folder,
+            name=name,
+            description=description,
+        )
+
     text, markup = base_retrieve(task)
 
     message = callback.message
@@ -437,18 +442,20 @@ async def end_update(
 
     if not isinstance(id, int):
         return message.reply(does_not_exist)
-    try:
-        task = Task.select().where(Task.id == id,
-                                   Task.account == account).get()
-    except DoesNotExist:
-        return message.reply(does_not_exist)
 
-    name, description = parse(message.text)
+    with database:
+        try:
+            task = Task \
+                .select().where(Task.id == id, Task.account == account).get()
+        except DoesNotExist:
+            return message.reply(does_not_exist)
 
-    task.name = name
-    if description:
-        task.description = description
-    task.save()
+        name, description = parse(message.text)
+
+        task.name = name
+        if description:
+            task.description = description
+        task.save()
 
     explanation = data.get('explanation')
     if is_message(explanation):
@@ -659,7 +666,8 @@ async def save_duration(
         await bot.edit_message_reply_markup(*explanation)
 
     try:
-        Duration.create(validate=True, task=task, notes=notes, **data)
+        with database:
+            Duration.create(validate=True, task=task, notes=notes, **data)
     except ValueError as e:
         text = str(e)
 

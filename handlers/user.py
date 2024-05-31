@@ -2,7 +2,7 @@ import pytz
 
 import link
 from settings import LANGUAGES
-from models import Account, Task
+from models import database, Account, Task
 from state import ChangeTimezone
 
 from aiogram import Router, Bot, F, types
@@ -115,10 +115,11 @@ def get_settings(account: Account) -> tuple[str, types.InlineKeyboardMarkup]:
         )
     builder.adjust(1)
 
-    folders = account.folders.count()  # type: ignore
-    tasks = account.tasks.count()  # type: ignore
-    completed = account.tasks \
-        .where(Task.is_done == True).count()  # noqa # type: ignore
+    with database:
+        folders = account.folders.count()  # type: ignore
+        tasks = account.tasks.count()  # type: ignore
+        completed = account.tasks \
+            .where(Task.is_done == True).count()  # noqa # type: ignore
     end = ''
 
     if tasks:
@@ -205,7 +206,8 @@ async def set_language(callback: types.CallbackQuery, account: Account):
 
     if language_code in [available for available, __ in LANGUAGES]:
         account.language_code = language_code  # type: ignore
-        account.save()
+        with database:
+            account.save()
 
         await callback.answer(_('Language successfully changed.'))
     else:
@@ -257,7 +259,8 @@ async def set_timezone(message: types.Message,
         )
 
     account.timezone = timezone  # type: ignore
-    account.save()
+    with database:
+        account.save()
 
     data = await state.get_data()
     if 'chat_id' in data and 'message_id' in data:

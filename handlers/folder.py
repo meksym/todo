@@ -1,5 +1,5 @@
 import link
-from models import Account, Folder
+from models import database, Account, Folder
 from state import CreateFolder, UpdateFolder
 
 from math import ceil
@@ -20,27 +20,29 @@ def get_list(account: Account,
              page: int) -> tuple[Text, types.InlineKeyboardMarkup | None]:
 
     builder = keyboard.InlineKeyboardBuilder()
-    count = account.folders.count()  # type: ignore
 
-    if not count:
-        text = _(
-            "Sorry, but I can't show the "
-            "folders because you don't have them."
-        )
-        builder.button(
-            text=_('🆕 Create folder'),
-            callback_data=link.Callback.folder_create
-        )
-        return Text(text), builder.as_markup()
+    with database:
+        count = account.folders.count()  # type: ignore
 
-    per_page = 10
-    pages = ceil(count / per_page)
+        if not count:
+            text = _(
+                "Sorry, but I can't show the "
+                "folders because you don't have them."
+            )
+            builder.button(
+                text=_('🆕 Create folder'),
+                callback_data=link.Callback.folder_create
+            )
+            return Text(text), builder.as_markup()
 
-    if page > pages or page < 0:
-        return Text('Incorrect page'), None
+        per_page = 10
+        pages = ceil(count / per_page)
 
-    folders = account.folders.paginate(page, per_page)
-    folders = list(folders)  # type: ignore
+        if page > pages or page < 0:
+            return Text('Incorrect page'), None
+
+        folders = account.folders.paginate(page, per_page)
+        folders = list(folders)  # type: ignore
 
     if page == 1:
         folders.insert(
@@ -197,11 +199,13 @@ async def save(
     data = message.text.split('\n\n', 1)
     name, description = data if len(data) == 2 else (data[0], None)
 
-    Folder.create(
-        name=name,
-        account=account,
-        description=description
-    )
+    with database:
+        Folder.create(
+            name=name,
+            account=account,
+            description=description
+        )
+
     text = _(
         'Folder "%s" has been created. '
         'Type /%s to view the list of folders.'
@@ -236,8 +240,9 @@ async def retrieve(
         )
     else:
         try:
-            folder = account.folders \
-                .where(Folder.id == id).get()  # type: ignore
+            with database:
+                filter = Folder.id == id  # type: ignore
+                folder = account.folders.where(filter).get()  # type: ignore
         except DoesNotExist:
             return await callback.answer(does_not_exists)
 
@@ -301,17 +306,18 @@ async def activate(
     except (ValueError, DoesNotExist):
         return await callback.answer(does_not_exists)
 
-    if folder_id == 0:
-        folder = None
-    else:
-        try:
-            folder = account.folders \
-                .where(Folder.id == folder_id).get()  # type: ignore
-        except DoesNotExist:
-            return await callback.answer(does_not_exists)
+    with database:
+        if folder_id == 0:
+            folder = None
+        else:
+            try:
+                filter = Folder.id == folder_id  # type: ignore
+                folder = account.folders.where(filter).get()  # type: ignore
+            except DoesNotExist:
+                return await callback.answer(does_not_exists)
 
-    account.active_folder = folder  # type: ignore
-    account.save()
+        account.active_folder = folder  # type: ignore
+        account.save()
 
     name = folder.name if folder else _('Main folder')
     text = _('Active folder successfully changed. Now active folder is "%s"')
@@ -341,8 +347,9 @@ async def update(callback: types.CallbackQuery,
         )
     else:
         try:
-            folder = account.folders \
-                .where(Folder.id == folder_id).get()  # type: ignore
+            with database:
+                filter = Folder.id == folder_id  # type: ignore
+                folder = account.folders.where(filter).get()  # type: ignore
         except DoesNotExist:
             return await callback.answer(does_not_exists)
 
@@ -380,21 +387,23 @@ async def save_update(
         return await message.reply(
             _("Sorry, but I can't process it. Try again.")
         )
-
     if not isinstance(id, int):
         return await message.answer('Incorrect id ):')
-    try:
-        folder = account.folders.where(Folder.id == id).get()  # type: ignore
-    except DoesNotExist:
-        return await message.answer(_('Folder does not exist'))
 
-    input = message.text.split('\n\n', 1)
-    name, description = input if len(input) == 2 else (input[0], None)
+    with database:
+        try:
+            filter = Folder.id == id  # type: ignore
+            folder = account.folders.where(filter).get()  # type: ignore
+        except DoesNotExist:
+            return await message.answer(_('Folder does not exist'))
 
-    folder.name = name
-    if description:
-        folder.description = description
-    folder.save()
+        input = message.text.split('\n\n', 1)
+        name, description = input if len(input) == 2 else (input[0], None)
+
+        folder.name = name
+        if description:
+            folder.description = description
+        folder.save()
 
     text = _(
         'Folder "%s" successfully changed. '
@@ -480,16 +489,18 @@ async def perform_delete(
             _('Sorry, but you cannot delete the main folder.')
         )
 
-    try:
-        folder = account.folders.where(Folder.id == id).get()  # type: ignore
-    except DoesNotExist:
-        return await callback.answer(does_not_exists)
+    with database:
+        try:
+            filter = Folder.id == id  # type: ignore
+            folder = account.folders.where(filter).get()  # type: ignore
+        except DoesNotExist:
+            return await callback.answer(does_not_exists)
 
-    if account.active_folder == folder:
-        account.active_folder = None  # type: ignore
-        account.save()
+        if account.active_folder == folder:
+            account.active_folder = None  # type: ignore
+            account.save()
 
-    folder.delete_instance()
+        folder.delete_instance()
 
     text = _('Folder "%s" was successfully deleted') % folder.name
     data = await state.get_data()

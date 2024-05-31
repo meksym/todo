@@ -1,6 +1,6 @@
 import link
 import settings
-from models import Account, Task
+from models import database, Account, Task
 
 from peewee import DoesNotExist
 from typing import Awaitable, Callable
@@ -29,10 +29,11 @@ class AccountMiddleware(BaseMiddleware):
             if user.language_code in languages:  # type: ignore
                 language_code = user.language_code
 
-            account, _ = Account.get_or_create(
-                id=user.id,
-                defaults={'language_code': language_code}
-            )
+            with database:
+                account, _ = Account.get_or_create(
+                    id=user.id,
+                    defaults={'language_code': language_code}
+                )
             data['account'] = account
 
         return await handler(event, data)
@@ -70,12 +71,13 @@ class TaskMiddleware(BaseMiddleware):
 
         if isinstance(account, Account) and isinstance(task_id, int):
             task = None
-            try:
-                # Does not depend on the account's active folder
-                task = Task.select().where(Task.id == task_id,  # type: ignore
-                                           Task.account == account).get()
-            except DoesNotExist:
-                pass
+            with database:
+                try:
+                    # Does not depend on the account's active folder
+                    task = Task.select().where(Task.id == task_id,
+                                               Task.account == account).get()
+                except DoesNotExist:
+                    pass
 
             if task:
                 data['task'] = task

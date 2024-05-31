@@ -3,7 +3,7 @@ from . import utils
 from peewee import fn
 # from matplotlib import pyplot
 from datetime import timedelta
-from models import Task, Duration, utc_now
+from models import database, Task, Duration, utc_now
 from aiogram.utils.i18n import gettext as _
 
 
@@ -17,19 +17,20 @@ def today(task: Task, file: IO):
     from matplotlib import pyplot
 
     now = utc_now().date()
-    durations = (
-        Duration
-        .select()
-        .where(
-            Duration.task == task,
-            fn.DATE(Duration.start) >= now
-        )
-        .order_by(Duration.start)
-        .limit(500)
-    )
 
-    if not len(durations):
-        raise ValueError()
+    with database:
+        durations = (
+            Duration
+            .select()
+            .where(
+                Duration.task == task,
+                fn.DATE(Duration.start) >= now
+            )
+            .order_by(Duration.start)
+            .limit(500)
+        )
+        if not len(durations):
+            raise ValueError()
 
     timeline = [0] * 24
 
@@ -77,20 +78,20 @@ def days(task: Task, count: int, file: IO):
     days = [now - timedelta(days=i) for i in range(count, -1, -1)]
     hours = [0.0] * (count + 1)
 
-    records = (
-        Duration
-        .select(date.alias('date'), duration)
-        .where(
-            Duration.task == task,
-            date >= startswith
+    with database:
+        records = (
+            Duration
+            .select(date.alias('date'), duration)
+            .where(
+                Duration.task == task,
+                date >= startswith
+            )
+            .group_by(date)
+            .order_by(date)
+            .limit(500)
         )
-        .group_by(date)
-        .order_by(date)
-        .limit(500)
-    )
-
-    if not len(records):
-        raise ValueError()
+        if not len(records):
+            raise ValueError()
 
     for record in records:
         hours[days.index(record.date)] += utils.minutes(record.duration) / 60

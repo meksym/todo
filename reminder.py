@@ -3,7 +3,7 @@ import settings
 from aiogram import Bot
 from celery import Celery
 from peewee import DoesNotExist
-from models import Account, Task
+from models import database, Account, Task
 from aiogram.utils.i18n import I18n
 from handlers.utils import base_retrieve
 from aiogram.utils.i18n import gettext as _
@@ -17,11 +17,12 @@ async def send(account_id: int, task_id: int):
     Coroutine for sending reminder messages.
     It will be executed asynchronously in a task queue.
     '''
-    try:
-        account = Account.get(id=account_id)
-        task = Task.get(id=task_id)
-    except DoesNotExist:
-        return
+    with database:
+        try:
+            account = Account.get(id=account_id)
+            task = Task.get(id=task_id)
+        except DoesNotExist:
+            return
 
     i18n = I18n(path=settings.LOCALES_PATH,
                 default_locale=settings.LANGUAGE_CODE)

@@ -3,7 +3,7 @@ from peewee import fn
 from typing import IO
 from datetime import timedelta
 from aiogram.utils.i18n import gettext as _
-from models import Account, Folder, Task, Duration, utc_now
+from models import database, Account, Folder, Task, Duration, utc_now
 
 
 def today(account: Account, folder: Folder | None, file: IO):
@@ -11,22 +11,22 @@ def today(account: Account, folder: Folder | None, file: IO):
     # imported to avoid errors when executing Celery tasks.
     from matplotlib import pyplot
 
-    records = (
-        Task
-        .select(Task, Duration)
-        .join(Duration)
-        .where(
-            Task.account == account,
-            Task.folder == folder,
-            Task.is_done == False,  # noqa
-            fn.DATE(Duration.start) == utc_now().date()
+    with database:
+        records = (
+            Task
+            .select(Task, Duration)
+            .join(Duration)
+            .where(
+                Task.account == account,
+                Task.folder == folder,
+                Task.is_done == False,  # noqa
+                fn.DATE(Duration.start) == utc_now().date()
+            )
+            .order_by(Duration.start)
+            .limit(500)
         )
-        .order_by(Duration.start)
-        .limit(500)
-    )
-
-    if not len(records):
-        raise ValueError()
+        if not len(records):
+            raise ValueError()
 
     timelines = {}
 
@@ -86,21 +86,21 @@ def days(account: Account, folder: Folder | None, count: int, file: IO):
     date = fn.DATE(Duration.start)
     duration = fn.SUM(Duration.end - Duration.start).alias('duration')
 
-    records = (
-        Task
-        .select(Task, date, duration)
-        .join(Duration)
-        .where(
-            Task.account == account,
-            Task.folder == folder,
-            date >= startswith
+    with database:
+        records = (
+            Task
+            .select(Task, date, duration)
+            .join(Duration)
+            .where(
+                Task.account == account,
+                Task.folder == folder,
+                date >= startswith
+            )
+            .group_by(Task, date)
+            .order_by(date)
         )
-        .group_by(Task, date)
-        .order_by(date)
-    )
-
-    if not len(records):
-        raise ValueError()
+        if not len(records):
+            raise ValueError()
 
     for task in records:
         if task not in chronology:
